@@ -22,7 +22,7 @@ const GroupList = () => {
       <h1>Groups</h1>
       <ul>
         {data?.map((group) => (
-          <li key={group.name}>
+          <li key={group._id.toString()}>
             <a href={`/groups/${group._id}`}>{group.name}</a>
           </li>
         ))}

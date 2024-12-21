@@ -5,15 +5,16 @@ import {
   APIErrorResponse,
   GetGroupsResponseType,
   GetGroupResponseType,
+  CreateGroupRequestType,
 } from "../types";
 
 export const createGroup = async (
-  req: Request,
+  req: Request<never, never, CreateGroupRequestType>,
   res: Response<CreateGroupResponseType | APIErrorResponse>
 ) => {
   try {
-    const { name, password } = req.body;
-    await Group.create({ name, password });
+    const { name, organizer, password } = req.body;
+    await Group.create({ name, password, organizer });
     res.status(201).json({ message: "Group created successfully" });
   } catch (error) {
     res.status(500).json({
@@ -39,7 +40,7 @@ export const getGroups = async (
 };
 
 export const getGroupById = async (
-  req: Request,
+  req: Request<{ id: string }>,
   res: Response<GetGroupResponseType | APIErrorResponse>
 ) => {
   try {

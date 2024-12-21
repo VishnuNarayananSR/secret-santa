@@ -15,6 +15,7 @@ export type CreateParticipantResponseType = {
 export type Group = {
   name: string;
   password: string;
+  organizer: Organizer;
   participants: Participant[];
 };
 
@@ -28,6 +29,9 @@ export type CreateGroupResponseType = {
 
 export type GetGroupResponseType = Omit<GroupDocument, "password">;
 export type GetGroupsResponseType = Array<Pick<GroupDocument, "_id" | "name">>;
+
+// Organizer Types
+export type Organizer = Participant;
 
 //API Shared Types
 export type APIErrorResponse = {

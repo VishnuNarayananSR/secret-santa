@@ -27,6 +27,9 @@ const Group: FC = () => {
     return (
       <div>
         <h1>{data.name}</h1>
+        <h2>Organizer</h2>
+        <p>{data.organizer.name}</p>
+        <p>{data.organizer.email}</p>
         <ul>
           {data.participants.map((participant) => (
             <li key={participant.email}>

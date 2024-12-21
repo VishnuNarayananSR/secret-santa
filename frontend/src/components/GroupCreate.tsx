@@ -6,18 +6,31 @@ import { APIErrorResponse } from "../../../src/types";
 
 const GroupCreate = () => {
   const queryClient = useQueryClient();
-  const [formData, setFormData] = useState({ name: "", password: "" });
+  const emptyForm = {
+    name: "",
+    password: "",
+    organizer: { name: "", email: "" },
+  };
+  const [formData, setFormData] = useState(emptyForm);
   const { mutate, isPending, error } = useMutation({
     mutationFn: createGroup,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["groups"] });
-      setFormData({ name: "", password: "" });
+      setFormData(emptyForm);
     },
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    if (name.includes(".")) {
+      const key = name.replace("organizer.", "");
+      setFormData((prevData) => ({
+        ...prevData,
+        organizer: { ...prevData.organizer, [key]: value },
+      }));
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -45,6 +58,24 @@ const GroupCreate = () => {
           onChange={handleChange}
           required
         />
+        <div>
+          <input
+            type="text"
+            name="organizer.name"
+            placeholder="Organizer Name"
+            value={formData.organizer.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="organizer.email"
+            placeholder="Organizer Email"
+            value={formData.organizer.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
         <button type="submit" disabled={isPending}>
           {isPending ? "Creating..." : "Create"}
         </button>
