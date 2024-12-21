@@ -5,6 +5,11 @@ export type Participant = {
   name: string;
   email: string;
 };
+export type CreateParticipantRequestType = { groupId: string } & Participant;
+
+export type CreateParticipantResponseType = {
+  message: string;
+};
 
 //Group Types
 export type Group = {
