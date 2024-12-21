@@ -14,7 +14,7 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/group" element={<Group />} />
+          <Route path="/groups/:id" element={<Group />} />
           <Route path="*" element={<_404 />} />
         </Routes>
       </Router>
