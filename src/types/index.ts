@@ -14,3 +14,17 @@ export type Group = {
 };
 
 export type GroupDocument = Document & Group;
+
+export type CreateGroupRequestType = Omit<Group, "participants">;
+
+export type CreateGroupResponseType = {
+  message: string;
+};
+
+export type GetGroupsResponseType = Array<Pick<GroupDocument, "_id" | "name">>;
+
+//API Shared Types
+export type APIErrorResponse = {
+  message: string;
+  detail: string;
+};
