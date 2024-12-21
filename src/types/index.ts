@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { HydratedDocument } from "mongoose";
 
 //Participant Types
 export type Participant = {
@@ -13,7 +13,7 @@ export type Group = {
   participants: Participant[];
 };
 
-export type GroupDocument = Document & Group;
+export type GroupDocument = HydratedDocument<Group>;
 
 export type CreateGroupRequestType = Omit<Group, "participants">;
 
@@ -21,10 +21,11 @@ export type CreateGroupResponseType = {
   message: string;
 };
 
+export type GetGroupResponseType = Omit<GroupDocument, "password">;
 export type GetGroupsResponseType = Array<Pick<GroupDocument, "_id" | "name">>;
 
 //API Shared Types
 export type APIErrorResponse = {
   message: string;
-  detail: string;
+  detail?: string;
 };
