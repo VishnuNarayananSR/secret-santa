@@ -27,7 +27,7 @@ export const getGroups = async (
   res: Response<GetGroupsResponseType | APIErrorResponse>
 ) => {
   try {
-    const groups = await Group.find({ _id: 1, name: 1 });
+    const groups = await Group.find({}, { _id: 1, name: 1 });
     res.status(200).json(groups);
   } catch (error) {
     res.status(500).json({
