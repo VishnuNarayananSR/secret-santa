@@ -8,6 +8,7 @@ import {
   EditParticipantRequestParamsType,
   EditParticipantRequestType,
   EditParticipantResponseType,
+  GroupDocument,
 } from "../types";
 import Group from "../models/groupModel";
 
@@ -17,7 +18,7 @@ export const getParticipantsByGroupId = async (
 ) => {
   try {
     const { groupId } = req.params;
-    const group = await Group.findById(groupId);
+    const group = await Group.findById<GroupDocument>(groupId);
     if (!group) {
       res.status(404).json({ message: "Group not found" });
       return;

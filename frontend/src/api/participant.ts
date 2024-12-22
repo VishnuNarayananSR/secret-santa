@@ -35,8 +35,9 @@ export const editParticipant = async (
   participant: Participant & { groupId: string; _id: string }
 ) => {
   try {
-    const response = await apiClient.put<CreateParticipantResponseType>(
-      `/participants/${participant._id}`,
+    const { _id, groupId } = participant;
+    const response = await apiClient.patch<CreateParticipantResponseType>(
+      `/participants/${groupId}/${_id}`,
       participant
     );
     return response.data;
@@ -46,12 +47,13 @@ export const editParticipant = async (
   }
 };
 
-export const deleteParticipant = async (
-  participant: Participant & { groupId: string; id: string }
-) => {
+export const deleteParticipant = async (participant: {
+  groupId: string;
+  id: string;
+}) => {
   try {
     const response = await apiClient.delete<CreateParticipantResponseType>(
-      `/participants/${participant.id}`
+      `/participants/${participant.groupId}/${participant.id}`
     );
     return response.data;
   } catch (error) {

@@ -2,6 +2,7 @@ import { HydratedDocument } from "mongoose";
 
 //Participant Types
 export type Participant = {
+  _id: string;
   name: string;
   email: string;
 };
