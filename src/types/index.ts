@@ -59,3 +59,11 @@ export type APIErrorResponse = {
   message: string;
   detail?: string;
 };
+
+//Email Service Types
+export type EmailContext = {
+  from: string;
+  to: string;
+  subject: string;
+  html: string;
+};
