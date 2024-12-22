@@ -1,17 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
-import { getGroup } from "../api/group";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useParams, useNavigate } from "react-router-dom";
+import { getGroup, editGroup, deleteGroup } from "../api/group";
 import { AxiosError } from "axios";
 import { APIErrorResponse } from "../../../src/types";
-import { FC } from "react";
+import { FC, useState } from "react";
 import AddParticipant from "../components/AddParticipant";
 
 const Group: FC = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { isLoading, data, error } = useQuery({
     queryKey: ["participant", id],
     queryFn: () => getGroup(id!),
   });
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [groupName, setGroupName] = useState("");
+  const [groupPassword, setGroupPassword] = useState("");
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -38,7 +44,59 @@ const Group: FC = () => {
             </li>
           ))}
         </ul>
-
+        <button onClick={() => setIsEditing(!isEditing)}>
+          {isEditing ? "Cancel" : "Edit"}
+        </button>
+        {isEditing && (
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              try {
+                await editGroup({
+                  _id: data._id.toString(),
+                  name: groupName,
+                  password: groupPassword,
+                });
+                queryClient.invalidateQueries({
+                  queryKey: ["participant", id],
+                });
+                setIsEditing(false);
+              } catch (error) {
+                console.error(error);
+              }
+            }}
+          >
+            <label>
+              Group Name:
+              <input
+                type="text"
+                value={groupName}
+                onChange={(e) => setGroupName(e.target.value)}
+              />
+            </label>
+            <label>
+              Group Password:
+              <input
+                type="password"
+                value={groupPassword}
+                onChange={(e) => setGroupPassword(e.target.value)}
+              />
+            </label>
+            <button type="submit">Save</button>
+          </form>
+        )}
+        <button
+          onClick={async () => {
+            try {
+              await deleteGroup(data._id.toString());
+              navigate("/");
+            } catch (error) {
+              console.error(error);
+            }
+          }}
+        >
+          Delete Group
+        </button>
         <AddParticipant />
       </div>
     );

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getGroups } from "../api/group";
 import { AxiosError } from "axios";
 import { APIErrorResponse } from "../../../src/types";
+import { Link } from "react-router-dom";
 const GroupList = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["groups"],
@@ -23,7 +24,7 @@ const GroupList = () => {
       <ul>
         {data?.map((group) => (
           <li key={group._id.toString()}>
-            <a href={`/groups/${group._id}`}>{group.name}</a>
+            <Link to={`/groups/${group._id}`}>{group.name}</Link>
           </li>
         ))}
       </ul>
