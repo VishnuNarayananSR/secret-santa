@@ -6,6 +6,7 @@ import {
   editGroup,
   deleteGroup,
 } from "../controllers/groupController";
+import { dispatchSantaLetters } from "../controllers/letterController";
 
 const router = express.Router();
 
@@ -14,5 +15,7 @@ router.get("/", getGroups);
 router.get("/:id", getGroupById);
 router.patch("/:id", editGroup);
 router.delete("/:id", deleteGroup);
+
+router.post("/:groupId/send-letters", dispatchSantaLetters);
 
 export default router;
