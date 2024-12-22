@@ -17,7 +17,7 @@ export const dispatchSantaLetters = async (
     // const { participants, organizer } = group;
     // const santaMap = shuffleAndAssignSecretSantas(participants);
 
-    res.status(200).json({ message: "Santa Cards dispatched." });
+    res.status(200).json({ message: "Letters dispatched successfully" });
   } catch (error) {
     res.status(500).json({
       message: "Error dispatching cards",

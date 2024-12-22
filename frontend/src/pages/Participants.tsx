@@ -9,6 +9,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { APIErrorResponse } from "../../../src/types";
 import { useState } from "react";
+import { dispatchLettersToSantas } from "../api/group";
 
 const Participants = () => {
   const { id } = useParams();
@@ -53,6 +54,15 @@ const Participants = () => {
     try {
       await deleteParticipant({ id: participantId, groupId: id! });
       queryClient.invalidateQueries({ queryKey: ["participant", id] });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDispatchLetters = async () => {
+    try {
+      const { message } = await dispatchLettersToSantas(id!);
+      alert(message);
     } catch (error) {
       console.error(error);
     }
@@ -114,6 +124,9 @@ const Participants = () => {
       <div>
         <AddParticipant />
       </div>
+      <button onClick={handleDispatchLetters}>
+        Dispatch Letters to Santas
+      </button>
     </div>
   );
 };
