@@ -14,7 +14,9 @@ const GroupList = () => {
   if (error) {
     return (
       <div>
-        Error: {(error as AxiosError<APIErrorResponse>).response?.data.message}
+        Error:{" "}
+        {(error as AxiosError<APIErrorResponse>).response?.data.message ||
+          "Network Error"}
       </div>
     );
   }
