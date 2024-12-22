@@ -11,6 +11,15 @@ export type CreateParticipantResponseType = {
   message: string;
 };
 
+export type EditParticipantRequestParamsType = {
+  groupId: string;
+  participantId: string;
+};
+export type EditParticipantRequestType = Partial<Participant>;
+export type EditParticipantResponseType = CreateParticipantResponseType;
+
+export type DeleteParticipantResponseType = CreateParticipantResponseType;
+
 //Group Types
 export type Group = {
   name: string;
