@@ -5,6 +5,8 @@ export type Participant = {
   name: string;
   email: string;
 };
+export type GetParticipantsResponseType = Array<Participant>;
+
 export type CreateParticipantRequestType = { groupId: string } & Participant;
 
 export type CreateParticipantResponseType = {
@@ -43,7 +45,10 @@ export type EditGroupResponseType = CreateGroupResponseType;
 
 export type DeleteGroupResponseType = CreateGroupResponseType;
 
-export type GetGroupResponseType = Omit<GroupDocument, "password">;
+export type GetGroupResponseType = Omit<
+  GroupDocument,
+  "password" | "participants"
+>;
 export type GetGroupsResponseType = Array<Pick<GroupDocument, "_id" | "name">>;
 
 // Organizer Types

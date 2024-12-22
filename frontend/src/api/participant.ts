@@ -1,5 +1,21 @@
-import { CreateParticipantResponseType, Participant } from "../../../src/types";
+import {
+  GetParticipantsResponseType,
+  CreateParticipantResponseType,
+  Participant,
+} from "../../../src/types";
 import apiClient from "./apiClient";
+
+export const getParticipants = async (groupId: string) => {
+  try {
+    const response = await apiClient.get<GetParticipantsResponseType>(
+      `/participants/${groupId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 export const addNewParticipant = async (
   participant: Participant & { groupId: string }

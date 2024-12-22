@@ -4,6 +4,7 @@ import Group from "./pages/Group";
 import Navbar from "./components/NavBar";
 import _404 from "./pages/_404";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import Participant from "./pages/Participants";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -14,7 +15,8 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/groups/:id" element={<Group />} />
+          <Route path="/participants/:id" element={<Participant />} />
+          <Route path="/group/:id" element={<Group />} />
           <Route path="*" element={<_404 />} />
         </Routes>
       </Router>

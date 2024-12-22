@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   APIErrorResponse,
+  GetParticipantsResponseType,
   CreateParticipantRequestType,
   CreateParticipantResponseType,
   DeleteParticipantResponseType,
@@ -9,6 +10,26 @@ import {
   EditParticipantResponseType,
 } from "../types";
 import Group from "../models/groupModel";
+
+export const getParticipantsByGroupId = async (
+  req: Request<{ groupId: string }>,
+  res: Response<GetParticipantsResponseType | APIErrorResponse>
+) => {
+  try {
+    const { groupId } = req.params;
+    const group = await Group.findById(groupId);
+    if (!group) {
+      res.status(404).json({ message: "Group not found" });
+      return;
+    }
+    res.status(200).json(group.participants);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching participants",
+      detail: (error as Error).message,
+    });
+  }
+};
 
 export const addNewParticipantByGroupId = async (
   req: Request<CreateParticipantRequestType>,

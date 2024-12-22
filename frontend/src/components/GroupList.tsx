@@ -24,7 +24,8 @@ const GroupList = () => {
       <ul>
         {data?.map((group) => (
           <li key={group._id.toString()}>
-            <Link to={`/groups/${group._id}`}>{group.name}</Link>
+            <Link to={`/participants/${group._id}`}>{group.name}</Link>{" "}
+            <Link to={`/group/${group._id}`}>Group Details</Link>
           </li>
         ))}
       </ul>

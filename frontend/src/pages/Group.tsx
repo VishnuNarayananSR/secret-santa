@@ -4,14 +4,13 @@ import { getGroup, editGroup, deleteGroup } from "../api/group";
 import { AxiosError } from "axios";
 import { APIErrorResponse } from "../../../src/types";
 import { FC, useState } from "react";
-import AddParticipant from "../components/AddParticipant";
 
 const Group: FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { isLoading, data, error } = useQuery({
-    queryKey: ["participant", id],
+    queryKey: ["group", id],
     queryFn: () => getGroup(id!),
   });
 
@@ -36,14 +35,6 @@ const Group: FC = () => {
         <h2>Organizer</h2>
         <p>{data.organizer.name}</p>
         <p>{data.organizer.email}</p>
-        <ul>
-          {data.participants.map((participant) => (
-            <li key={participant.email}>
-              <p>{participant.name}</p>
-              <p>{participant.email}</p>
-            </li>
-          ))}
-        </ul>
         <button onClick={() => setIsEditing(!isEditing)}>
           {isEditing ? "Cancel" : "Edit"}
         </button>
@@ -97,7 +88,6 @@ const Group: FC = () => {
         >
           Delete Group
         </button>
-        <AddParticipant />
       </div>
     );
   }

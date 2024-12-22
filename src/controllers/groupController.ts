@@ -48,7 +48,7 @@ export const getGroupById = async (
 ) => {
   try {
     const { id } = req.params;
-    const group = await Group.findById(id, { password: 0 });
+    const group = await Group.findById(id, { password: 0, participants: 0 });
     if (!group) {
       res.status(404).json({ message: "Group not found" });
       return;
