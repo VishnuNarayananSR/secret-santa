@@ -3,6 +3,8 @@ import {
   GetGroupsResponseType,
   CreateGroupResponseType,
   GetGroupResponseType,
+  EditGroupResponseType,
+  DeleteGroupResponseType,
 } from "../../../src/types";
 
 export const getGroup = async (id: string) => {
@@ -33,6 +35,35 @@ export const createGroup = async (group: {
     const response = await apiClient.post<CreateGroupResponseType>(
       "/groups",
       group
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const editGroup = async (group: {
+  _id: string;
+  name?: string;
+  password?: string;
+}) => {
+  try {
+    const response = await apiClient.patch<EditGroupResponseType>(
+      `/groups/${group._id}`,
+      group
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteGroup = async (id: string) => {
+  try {
+    const response = await apiClient.delete<DeleteGroupResponseType>(
+      `/groups/${id}`
     );
     return response.data;
   } catch (error) {
