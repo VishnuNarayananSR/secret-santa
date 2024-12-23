@@ -18,7 +18,7 @@ export const getParticipants = async (groupId: string) => {
 };
 
 export const addNewParticipant = async (
-  participant: Participant & { groupId: string }
+  participant: Omit<Participant, "_id"> & { groupId: string }
 ) => {
   try {
     const response = await apiClient.post<CreateParticipantResponseType>(
