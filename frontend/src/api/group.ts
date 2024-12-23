@@ -17,7 +17,7 @@ export const getGroup = async (id: string) => {
   }
 };
 
-export const getGroups = async () => {
+export const getGroups: () => Promise<GetGroupsResponseType> = async () => {
   try {
     const response = await apiClient.get<GetGroupsResponseType>("/groups");
     return response.data;
