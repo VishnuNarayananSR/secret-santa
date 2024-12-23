@@ -39,6 +39,16 @@ export const addNewParticipantByGroupId = async (
   try {
     const { groupId, name, email } = req.body;
     const participant = { name, email };
+    const existingParticipant = await Group.findOne({
+      _id: groupId,
+      "participants.email": email,
+    });
+    if (existingParticipant) {
+      res
+        .status(400)
+        .json({ message: "User with same email already exists in group" });
+      return;
+    }
     await Group.findByIdAndUpdate(
       groupId,
       {

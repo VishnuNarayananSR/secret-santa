@@ -22,7 +22,6 @@ const groupSchema: Schema = new Schema<Group>({
         email: {
           type: String,
           required: true,
-          unique: [true, "User with same email already exists"],
           match: [/\S+@\S+\.\S+/, "Please use a valid email address"],
         },
       },
