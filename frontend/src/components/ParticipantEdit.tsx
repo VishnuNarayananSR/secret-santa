@@ -87,19 +87,25 @@ const ParticipantEdit: React.FC<ParticipantEditProps> = ({
               <Input
                 value={participantName}
                 onChange={(e) => setParticipantName(e.target.value)}
-                placeholder="Name"
-              />
-              <Input
-                value={participantEmail}
-                onChange={(e) => setParticipantEmail(e.target.value)}
-                placeholder="Email"
-                type="email"
                 isRequired
-                label="Group Name"
+                label="Name"
                 name="name"
                 variant="underlined"
                 required
                 fullWidth
+                color="primary"
+              />
+              <Input
+                value={participantEmail}
+                onChange={(e) => setParticipantEmail(e.target.value)}
+                type="email"
+                isRequired
+                label="Email"
+                name="email"
+                variant="underlined"
+                required
+                fullWidth
+                color="primary"
               />
               <ModalFooter className="mx-auto gap-4">
                 <Button

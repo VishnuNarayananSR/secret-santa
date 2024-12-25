@@ -109,7 +109,6 @@ const GroupEdit: React.FC<GroupEditProps> = ({
                 name="name"
                 value={formData.name}
                 onChange={handleEdit}
-                placeholder="Group Name"
                 variant="underlined"
                 required
                 fullWidth
@@ -121,10 +120,10 @@ const GroupEdit: React.FC<GroupEditProps> = ({
                 name="organizer.name"
                 value={formData.organizer.name}
                 onChange={handleEdit}
-                placeholder="Organizer Name"
                 variant="underlined"
                 required
                 fullWidth
+                color="primary"
               />
               <Input
                 isRequired
@@ -133,10 +132,10 @@ const GroupEdit: React.FC<GroupEditProps> = ({
                 name="organizer.email"
                 value={formData.organizer.email}
                 onChange={handleEdit}
-                placeholder="Organizer Email"
                 variant="underlined"
                 required
                 fullWidth
+                color="primary"
               />
               {/* <Input
                 label="Group Password"

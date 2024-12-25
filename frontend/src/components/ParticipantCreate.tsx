@@ -80,10 +80,10 @@ const ParticipantCreate = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Participant Name"
                   variant="underlined"
                   required
                   fullWidth
+                  color="primary"
                 />
                 <Input
                   isRequired
@@ -92,10 +92,10 @@ const ParticipantCreate = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Participant Email"
                   variant="underlined"
                   required
                   fullWidth
+                  color="primary"
                 />
                 <div className="py-4"></div>
                 <Button
