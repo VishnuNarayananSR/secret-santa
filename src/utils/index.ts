@@ -1,16 +1,15 @@
-import { Participant } from "../types";
+import { GiverAndReceiver, Participant } from "../types";
 
 export const shuffleAndAssignSecretSantas = (
   participants: Participant[]
-): Map<Participant, Participant> => {
+): GiverAndReceiver[] => {
   const shuffledParticipants = [...participants].sort(
     () => 0.5 - Math.random()
   );
   return shuffledParticipants.reduce((map, participant, index) => {
-    map.set(
-      participant,
-      shuffledParticipants[(index + 1) % shuffledParticipants.length]
-    );
+    const receiver =
+      shuffledParticipants[(index + 1) % shuffledParticipants.length];
+    map.push({ giver: participant, receiver });
     return map;
-  }, new Map<Participant, Participant>());
+  }, new Array<{ giver: Participant; receiver: Participant }>());
 };

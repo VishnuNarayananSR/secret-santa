@@ -68,3 +68,6 @@ export type EmailContext = {
   subject: string;
   html: string;
 };
+
+//Santa Map Type
+export type GiverAndReceiver = { giver: Participant; receiver: Participant };

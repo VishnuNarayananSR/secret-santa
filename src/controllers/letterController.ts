@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { APIErrorResponse } from "../types";
+import { APIErrorResponse, EmailContext, Participant } from "../types";
 import Group from "../models/groupModel";
 import { shuffleAndAssignSecretSantas } from "../utils";
+import { composeEmailObjects, sendSantaEmails } from "../services/emailService";
 
 export const dispatchSantaLetters = async (
   req: Request<{ groupId: string }>,
@@ -14,9 +15,14 @@ export const dispatchSantaLetters = async (
       res.status(404).json({ message: "Group not found" });
       return;
     }
-    // const { participants, organizer } = group;
-    // const santaMap = shuffleAndAssignSecretSantas(participants);
-
+    const { participants, organizer, name: groupName } = group;
+    const assignedSantas = shuffleAndAssignSecretSantas(participants);
+    const emailObjects = composeEmailObjects(
+      groupName,
+      organizer,
+      assignedSantas
+    );
+    sendSantaEmails(emailObjects);
     res.status(200).json({ message: "Letters dispatched successfully" });
   } catch (error) {
     res.status(500).json({

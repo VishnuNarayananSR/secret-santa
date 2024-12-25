@@ -49,7 +49,7 @@ const DispatchLetter = ({ groupId }: { groupId: string | undefined }) => {
             <Button color="danger" onPress={() => setVisible(false)}>
               Cancel
             </Button>
-            <Button onClick={handleDispatchLetters}>Confirm</Button>
+            <Button onPress={handleDispatchLetters}>Confirm</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
