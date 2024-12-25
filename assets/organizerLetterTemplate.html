@@ -56,6 +56,7 @@
         font-weight: 400;
         font-style: normal;
         font-size: 2rem;
+        margin: 0.5rem 0;
       }
       /* Table styling for Santa-Gift pairs */
       table {
@@ -100,6 +101,10 @@
             <img class="logo" src="cid:logo" alt="Secret Sleigh Logo" />
             <p class="greeting">Dear {{recipient}},</p>
             <p class="message">Ho! Ho! Ho!</p>
+            <p class="message">
+              Here is the list of Santas and their respective gift receivers for
+              this year.
+            </p>
             <table>
               <thead>
                 <tr>
@@ -111,10 +116,7 @@
                 {{table rows}}
               </tbody>
             </table>
-            <p class="message">
-              Here is the list of Santas and their respective gift receivers for
-              this year.
-            </p>
+
             <p class="greeting great-vibes-regular">Merry Christmas🎄</p>
             <p class="greeting great-vibes-regular">&</p>
             <p class="greeting great-vibes-regular">Happy New Year🎉</p>

@@ -4,13 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>You are Secret Santa</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
       rel="stylesheet"
-    />
+    /> -->
     <style>
+      @font-face {
+        font-family: "Great Vibes";
+        src: url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap")
+          format("woff2");
+      }
       /* Fallback styles */
       body {
         margin: 0;
@@ -21,7 +26,7 @@
         background-color: #fffbf6; /* Fallback background color */
       }
       .email-container {
-        max-width: 400px;
+        max-width: 600px;
         margin: 0 auto;
         background-color: #fff;
         padding: 40px;
@@ -55,6 +60,7 @@
         font-weight: 400;
         font-style: normal;
         font-size: 2rem;
+        margin: 0.5rem 0;
       }
     </style>
   </head>
@@ -80,8 +86,9 @@
             <p class="greeting">Dear {{recipient}},</p>
             <p class="message">Ho! Ho! Ho!</p>
             <p class="message">
-              You are the secret santa for {{name}} this year. Make it a special
-              one!
+              You are the secret santa for
+              <span style="font-weight: bold; color: #bb2528">{{name}}</span>
+              this year. Make it a special one!
             </p>
             <p>Happy Gifting🎁</p>
             <p class="greeting great-vibes-regular">Merry Christmas🎄</p>
