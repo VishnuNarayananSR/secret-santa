@@ -39,9 +39,7 @@ export type CreateGroupResponseType = {
   message: string;
 };
 
-export type EditGroupRequestType = Partial<
-  Omit<Group, "participants" | "password">
->;
+export type EditGroupRequestType = Partial<Omit<Group, "participants">>;
 export type EditGroupResponseType = CreateGroupResponseType;
 
 export type DeleteGroupResponseType = CreateGroupResponseType;
@@ -50,7 +48,9 @@ export type GetGroupResponseType = Omit<
   GroupDocument,
   "password" | "participants"
 >;
-export type GetGroupsResponseType = Array<Pick<GroupDocument, "_id" | "name">>;
+export type GetGroupsResponseType = Array<
+  Pick<GroupDocument, "_id" | "name" | "organizer">
+>;
 
 // Organizer Types
 export type Organizer = Participant;

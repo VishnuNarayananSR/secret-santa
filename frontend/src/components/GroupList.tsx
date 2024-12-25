@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getGroups } from "../api/group";
 import { AxiosError } from "axios";
-import { APIErrorResponse } from "../../../src/types";
+import { APIErrorResponse, GetGroupsResponseType } from "../../../src/types";
 import { Link } from "react-router-dom";
 import { Card, Spinner } from "@nextui-org/react";
 import { EllipsisVeritcal } from "../assets/Icons";
@@ -16,7 +16,10 @@ const GroupList = () => {
     queryFn: getGroups,
   });
 
-  const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<
+    GetGroupsResponseType[number] | null
+  >(null);
+  useState<GetGroupsResponseType | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -24,7 +27,9 @@ const GroupList = () => {
     option: { key: string; value: string },
     groupId: string
   ) => {
-    setSelectedGroupId(groupId);
+    setSelectedGroup(
+      data?.find((group) => group._id.toString() === groupId) || null
+    );
     if (option.key === "edit") {
       setIsEditModalOpen(true);
     } else if (option.key === "delete") {
@@ -95,16 +100,16 @@ const GroupList = () => {
         </div>
       </div>
       <EditGroup
-        groupId={selectedGroupId!}
-        groupName={
-          data?.find((g) => g._id.toString() === selectedGroupId)?.name || ""
-        }
+        groupId={selectedGroup?._id.toString()!}
+        groupName={selectedGroup?.name || ""}
         groupPassword={""}
+        organizerName={selectedGroup?.organizer.name || ""}
+        organizerEmail={selectedGroup?.organizer.email || ""}
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
       />
       <DeleteGroup
-        groupId={selectedGroupId!}
+        groupId={selectedGroup?._id.toString()!}
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
       />

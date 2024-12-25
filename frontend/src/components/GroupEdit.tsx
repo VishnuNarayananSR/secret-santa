@@ -16,6 +16,8 @@ interface GroupEditProps {
   groupId: string;
   groupName: string;
   groupPassword: string;
+  organizerName: string;
+  organizerEmail: string;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -24,35 +26,54 @@ const GroupEdit: React.FC<GroupEditProps> = ({
   groupId,
   groupName: initialGroupName,
   groupPassword: initialGroupPassword,
+  organizerName: initialOrganizerName,
+  organizerEmail: initialOrganizerEmail,
   isOpen,
   onClose,
 }) => {
-  const [groupName, setGroupName] = useState(initialGroupName);
-  const [groupPassword, setGroupPassword] = useState(initialGroupPassword);
+  const [formData, setFormData] = useState({
+    _id: groupId,
+    name: initialGroupName,
+    password: initialGroupPassword,
+    organizer: { name: initialOrganizerName, email: initialOrganizerEmail },
+  });
   const queryClient = useQueryClient();
 
   const { mutate, isPending, error } = useMutation({
-    mutationFn: () =>
-      editGroup({
-        _id: groupId,
-        name: groupName,
-        password: groupPassword,
-      }),
+    mutationFn: () => editGroup(formData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["groups"] });
       onClose();
     },
   });
 
-  const handleEdit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    mutate();
+  const handleEdit = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (name.includes(".")) {
+      const key = name.replace("organizer.", "");
+      setFormData((prevData) => ({
+        ...prevData,
+        organizer: { ...prevData.organizer, [key]: value },
+      }));
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
   };
 
   useEffect(() => {
-    setGroupName(initialGroupName);
-    setGroupPassword(initialGroupPassword);
-  }, [initialGroupName, initialGroupPassword, isOpen]);
+    setFormData({
+      _id: groupId,
+      name: initialGroupName,
+      password: initialGroupPassword,
+      organizer: { name: initialOrganizerName, email: initialOrganizerEmail },
+    });
+  }, [
+    initialGroupName,
+    initialGroupPassword,
+    initialOrganizerName,
+    initialOrganizerEmail,
+    isOpen,
+  ]);
 
   return (
     <Modal
@@ -68,21 +89,51 @@ const GroupEdit: React.FC<GroupEditProps> = ({
         </ModalHeader>
         <ModalBody>
           {isPending ? (
-            <div className="text-center text-lg">Loading...</div>
+            <div className="text-center text-lg">Saving...</div>
           ) : error ? (
             <div className="text-center text-lg text-error">
               Error: {error.message}
             </div>
           ) : (
-            <Form onSubmit={handleEdit} autoComplete="off">
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                mutate();
+              }}
+              autoComplete="off"
+            >
               <Input
                 isRequired
                 type="text"
                 label="Group Name"
                 name="name"
-                value={groupName}
-                onChange={(e) => setGroupName(e.target.value)}
+                value={formData.name}
+                onChange={handleEdit}
                 placeholder="Group Name"
+                variant="underlined"
+                required
+                fullWidth
+              />
+              <Input
+                isRequired
+                type="text"
+                label="Organizer Name"
+                name="organizer.name"
+                value={formData.organizer.name}
+                onChange={handleEdit}
+                placeholder="Organizer Name"
+                variant="underlined"
+                required
+                fullWidth
+              />
+              <Input
+                isRequired
+                type="text"
+                label="Organizer Email"
+                name="organizer.email"
+                value={formData.organizer.email}
+                onChange={handleEdit}
+                placeholder="Organizer Email"
                 variant="underlined"
                 required
                 fullWidth

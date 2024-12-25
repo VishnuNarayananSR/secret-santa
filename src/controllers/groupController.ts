@@ -32,7 +32,10 @@ export const getGroups = async (
   res: Response<GetGroupsResponseType | APIErrorResponse>
 ) => {
   try {
-    const groups = await Group.find({}, { _id: 1, name: 1 }).lean();
+    const groups = await Group.find(
+      {},
+      { _id: 1, name: 1, organizer: 1 }
+    ).lean();
     res.status(200).json(groups);
   } catch (error) {
     res.status(500).json({
@@ -67,10 +70,14 @@ export const editGroup = async (
 ) => {
   try {
     const { id } = req.params;
-    const { name, organizer } = req.body;
+    const { name, organizer, password } = req.body;
     const group = await Group.findByIdAndUpdate(
       id,
-      { name, organizer },
+      {
+        ...(name && { name }),
+        ...(organizer && { organizer }),
+        ...(password && { password }),
+      },
       { runValidators: true }
     );
     if (!group) {
