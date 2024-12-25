@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsc --watch & nodemon dist/app.js",
-    "build": "tsc",
+    "build:server": "tsc",
+    "build:frontend": "cd frontend && pnpm run build",
+    "build": "npm run build:server && npm run build:frontend",
     "start": "node dist/app.js"
   },
   "keywords": [],
