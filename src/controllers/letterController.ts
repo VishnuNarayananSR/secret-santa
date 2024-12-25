@@ -5,14 +5,21 @@ import { shuffleAndAssignSecretSantas } from "../utils";
 import { composeEmailObjects, sendSantaEmails } from "../services/emailService";
 
 export const dispatchSantaLetters = async (
-  req: Request<{ groupId: string }>,
+  req: Request<{ groupId: string }, never, { passCode: string }>,
   res: Response<{ message: string } | APIErrorResponse>
 ) => {
   try {
     const { groupId } = req.params;
+    const { passCode } = req.body;
     const group = await Group.findById(groupId);
     if (!group) {
       res.status(404).json({ message: "Group not found" });
+      return;
+    }
+    if (passCode != group.password) {
+      res
+        .status(403)
+        .json({ message: "Invalid passcode. Letters will not be dispatched." });
       return;
     }
     const { participants, organizer, name: groupName } = group;

@@ -18,7 +18,7 @@ const GroupCreate = () => {
   const emptyForm = {
     name: "",
     email: "",
-    password: "temp",
+    password: "",
     organizer: { name: "", email: "" },
   };
   const [formData, setFormData] = useState(emptyForm);
@@ -95,7 +95,6 @@ const GroupCreate = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Group Name"
                   variant="underlined"
                   required
                   fullWidth
@@ -107,7 +106,6 @@ const GroupCreate = () => {
                   name="organizer.name"
                   value={formData.organizer.name}
                   onChange={handleChange}
-                  placeholder="Organizer Name"
                   variant="underlined"
                   required
                   fullWidth
@@ -119,22 +117,21 @@ const GroupCreate = () => {
                   value={formData.organizer.email}
                   onChange={handleChange}
                   label="Organizer Email"
-                  placeholder="Organizer Email"
                   variant="underlined"
                   required
                   fullWidth
                 />
-                {/* <Input
+                <Input
                   type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  label="Password"
-                  placeholder="Password"
+                  label="Passcode"
+                  description="This will be asked when dispatching letters."
                   variant="underlined"
                   required
                   fullWidth
-                /> */}
+                />
               </div>
               {isError && (
                 <p className="text-error-500 mt-2">

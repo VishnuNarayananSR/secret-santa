@@ -71,10 +71,14 @@ export const deleteGroup = async (id: string) => {
     throw error;
   }
 };
-export const dispatchLettersToSantas = async (groupId: string) => {
+export const dispatchLettersToSantas = async (
+  groupId: string,
+  passCode: string
+) => {
   try {
     const response = await apiClient.post<{ message: string }>(
-      `/groups/${groupId}/send-letters`
+      `/groups/${groupId}/send-letters`,
+      { passCode }
     );
     return response.data;
   } catch (error) {
