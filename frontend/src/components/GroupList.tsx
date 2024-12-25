@@ -72,10 +72,10 @@ const GroupList = () => {
               key={group._id.toString()}
               className="p-4 rounded-lg md:p-6 lg:p-8"
             >
-              <div className="flex flex-row justify-between items-center md:items-start">
+              <div className="flex flex-row justify-between items-center md:items-start gap-2">
                 <Link
                   to={`${group._id}/participants/`}
-                  className="text-lg font-semibold text-secondary-500 md:text-xl lg:text-2xl hover:underline self-start"
+                  className="flex-grow text-lg font-semibold text-secondary-500 md:text-xl lg:text-2xl hover:underline self-start"
                 >
                   <h4 className="ml-6 capitalize">{group.name}</h4>
                 </Link>
