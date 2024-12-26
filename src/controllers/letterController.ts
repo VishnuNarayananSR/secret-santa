@@ -29,7 +29,7 @@ export const dispatchSantaLetters = async (
       organizer,
       assignedSantas
     );
-    sendSantaEmails(emailObjects);
+    await sendSantaEmails(emailObjects);
     res.status(200).json({ message: "Letters dispatched successfully" });
   } catch (error) {
     res.status(500).json({
