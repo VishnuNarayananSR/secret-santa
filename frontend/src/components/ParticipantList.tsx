@@ -4,13 +4,11 @@ import { AxiosError } from "axios";
 import { APIErrorResponse } from "../../../src/types";
 import { useParams } from "react-router-dom";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  TableHeader,
+  Card,
+  CardHeader,
+  ScrollShadow,
   Spinner,
-  TableColumn,
+  User,
 } from "@nextui-org/react";
 import { EllipsisVeritcal } from "../assets/Icons";
 import DropdownMenu from "./DropdownMenu";
@@ -63,75 +61,47 @@ const ParticipantList = () => {
     );
   }
 
-  const columns = [
-    { key: "name", label: "Name" },
-    { key: "email", label: "Email" },
-    { key: "actions", label: "Actions" },
-  ];
-
-  const rows = data?.map((participant) => ({
-    key: participant._id.toString(),
-    name: participant.name,
-    email: participant.email,
-    actions: participant._id.toString(),
-  }));
-
-  const renderCell = (
-    item: {
-      key: string;
-      name: string;
-      email: string;
-      actions: string;
-    },
-    columnKey: any
-  ) => {
-    switch (columnKey) {
-      case "name":
-        return (
-          <p className="text-lg capitalize text-primary-600">{item.name}</p>
-        );
-      case "email":
-        return <p className="text-lg ">{item.email}</p>;
-      case "actions":
-        return (
-          <DropdownMenu
-            items={[
-              { key: "delete", value: "Delete" },
-              { key: "edit", value: "Edit" },
-            ]}
-            onSelect={(option) => option && handleSelect(option, item.actions)}
-          >
-            <button className="hover:scale-125 outline-none transition duration-200">
-              <EllipsisVeritcal />
-            </button>
-          </DropdownMenu>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div className="container mx-auto p-4 md:p-6 lg:p-8">
+    <div className="flex flex-col h-full container mx-auto p-4 md:p-6 lg:p-8">
       <h2 className="text-3xl font-bold text-primary-500 mb-6">
         Participants:
       </h2>
-      <Table aria-label="Participants List" shadow="md" isStriped isCompact>
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        <TableBody items={rows} emptyContent={"No participants added."}>
-          {(item) => (
-            <TableRow key={item.key}>
-              {(columnKey) => (
-                <TableCell>{renderCell(item, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      <ScrollShadow
+        hideScrollBar
+        size={60}
+        className="mt-2 max-h-[calc(100vh-26rem-env(safe-area-inset-bottom))]"
+      >
+        <div className="flex flex-wrap gap-4">
+          {data?.map((participant) => (
+            <Card className="shadow-md w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+              <CardHeader className="flex justify-between items-center mt-1">
+                <User
+                  key={participant._id.toString()}
+                  avatarProps={{
+                    src: `https://api.dicebear.com/9.x/glass/svg?seed=${participant.email}`,
+                  }}
+                  name={participant.name}
+                  description={participant.email}
+                />
+                <DropdownMenu
+                  items={[
+                    { key: "delete", value: "Delete" },
+                    { key: "edit", value: "Edit" },
+                  ]}
+                  onSelect={(option) =>
+                    option && handleSelect(option, participant._id.toString())
+                  }
+                >
+                  <button className="hover:scale-125 outline-none transition duration-200">
+                    <EllipsisVeritcal />
+                  </button>
+                </DropdownMenu>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+        <div className="h-10"></div>
+      </ScrollShadow>
 
       <ParticipantEdit
         participantId={selectedParticipantId!}
