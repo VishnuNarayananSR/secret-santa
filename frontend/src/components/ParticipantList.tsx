@@ -63,9 +63,12 @@ const ParticipantList = () => {
 
   return (
     <div className="flex flex-col h-full container mx-auto p-4 md:p-6 lg:p-8">
-      <h2 className="text-3xl font-bold text-primary-500 mb-6">
-        Participants:
-      </h2>
+      <div className="flex flex-col mb-4 gap-y-0.5">
+        <h2 className="text-3xl font-bold text-primary-500">Participants:</h2>
+        <p className="px-1 text-xs text-default-700">
+          Showing {data?.length} participants
+        </p>
+      </div>
       <ScrollShadow
         hideScrollBar
         size={60}
@@ -102,7 +105,6 @@ const ParticipantList = () => {
         </div>
         <div className="h-10"></div>
       </ScrollShadow>
-
       <ParticipantEdit
         participantId={selectedParticipantId!}
         participantName={
