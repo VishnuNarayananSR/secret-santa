@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "builds": [{ "src": "dist/app.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "dist/app.js" }],
+  "outputDirectory": "dist",
+  "buildCommand": "pnpm run build",
+  "installCommand": "pnpm install; cd frontend && pnpm install"
+}

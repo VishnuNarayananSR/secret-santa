@@ -3,4 +3,5 @@ dist/
 .env
 logs/
 .vscode/
+.vercel
 
