@@ -39,14 +39,21 @@ export const composeEmailObjects = (
   organizer: Participant,
   giverReceiverMap: GiverAndReceiver[]
 ): EmailContext[] => {
-  const santas = giverReceiverMap.map(({ giver, receiver }) => ({
+  const santaEmailTemplate = readFileSync(
+    path.resolve(__dirname, "../../assets/participantLetterTemplate.html"),
+    "utf-8"
+  );
+
+  const organizerEmailTemplate = readFileSync(
+    path.resolve(__dirname, "../../assets/organizerLetterTemplate.html"),
+    "utf-8"
+  );
+
+  const santaEmails = giverReceiverMap.map(({ giver, receiver }) => ({
     from: EMAIL_USERNAME,
     to: giver.email,
-    subject: "Your secret santa match🎅🏻",
-    html: readFileSync(
-      path.resolve(__dirname, "../../assets/participantLetterTemplate.html"),
-      "utf-8"
-    )
+    subject: "Your secret santa match",
+    html: santaEmailTemplate
       .replace(/{{recipient}}/g, giver.name)
       .replace(/{{name}}/g, receiver.name)
       .replace(/{{groupName}}/g, groupName),
@@ -54,11 +61,8 @@ export const composeEmailObjects = (
   const organizerEmailObject = {
     from: EMAIL_USERNAME,
     to: organizer.email,
-    subject: "Secret santas of this year🎅🏻",
-    html: readFileSync(
-      path.resolve(__dirname, "../../assets/organizerLetterTemplate.html"),
-      "utf-8"
-    )
+    subject: "Secret santas of this year",
+    html: organizerEmailTemplate
       .replace(/{{recipient}}/g, organizer.name)
       .replace(/{{groupName}}/g, groupName)
       .replace(
@@ -80,5 +84,5 @@ export const composeEmailObjects = (
           .join("")
       ),
   };
-  return [...santas, organizerEmailObject];
+  return [...santaEmails, organizerEmailObject];
 };
