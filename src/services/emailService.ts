@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { EmailContext, GiverAndReceiver, Participant } from "../types";
 import { readFileSync } from "fs";
-import { EMAIL_PASSWORD, EMAIL_USERNAME } from "../constants";
+import { EMAIL_PASSWORD, EMAIL_USERNAME, EMAIL_BATCH_SIZE } from "../constants";
 import path from "path";
 
 const transporter = nodemailer.createTransport({
@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
     pass: EMAIL_PASSWORD,
   },
   pool: true,
-  maxConnections: 20,
+  maxConnections: EMAIL_BATCH_SIZE,
 });
 
 export const sendSantaEmails = async (emails: EmailContext[]) => {
